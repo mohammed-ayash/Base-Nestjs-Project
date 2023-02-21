@@ -15,6 +15,7 @@ async function bootstrap() {
     .setTitle('Lenso Application')
     .setDescription('The Lenso API description')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, config);

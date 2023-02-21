@@ -36,6 +36,10 @@ export class AdminService extends BaseService<
     return await this.adminRepository.save({ ...admin, ...updateAdminDto });
   }
 
+  async findOneByEmail(email: string): Promise<Admin | undefined> {
+    return this.adminRepository.findOneBy({ email });
+  }
+
   async passwordHash(password: string): Promise<string> {
     const salt = await bcrypt.genSaltSync();
 

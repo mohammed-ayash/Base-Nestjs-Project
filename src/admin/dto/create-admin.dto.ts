@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsBooleanString,
+  IsBoolean,
   IsEmail,
   IsNotEmpty,
   IsString,
@@ -34,6 +34,6 @@ export class CreateAdminDto {
     example: true,
     description: 'is the admin avtive or not',
   })
-  @IsBooleanString()
+  @IsBoolean()
   active: boolean;
 }

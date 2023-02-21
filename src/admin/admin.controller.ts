@@ -8,8 +8,10 @@ import {
   Delete,
   UseInterceptors,
   Query,
+  UseGuards,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/Guard/jwt-auth.guard';
 import { BaseController } from 'src/base/base.controller';
 import { TransformInterceptor } from 'src/interceptor/transform.interceptor';
 import { AdminService } from './admin.service';
@@ -17,6 +19,8 @@ import { CreateAdminDto } from './dto/create-admin.dto';
 import { FilterAdminDto } from './dto/filter-admin.dto';
 import { UpdateAdminDto } from './dto/update-admin.dto';
 
+@UseGuards(JwtAuthGuard)
+@ApiBearerAuth()
 @Controller('admin')
 @ApiTags('Admin')
 @UseInterceptors(TransformInterceptor)

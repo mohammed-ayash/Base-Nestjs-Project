@@ -3,10 +3,13 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module';
 import { Admin } from './admin/entities/admin.entity';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: process.env.DATABASE_HOST,
@@ -19,6 +22,7 @@ import { Admin } from './admin/entities/admin.entity';
       synchronize: true,
     }),
     AdminModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
