@@ -1,12 +1,13 @@
-import { BaseFilterInterface } from './interface/base.filter.interface';
+import { Repository } from 'typeorm';
 
-export abstract class BaseFilter implements BaseFilterInterface {
-  applyFilter(query, _execute = false) {
+export abstract class BaseRepositry<T, F> extends Repository<T> {
+  applyFilter(query, filterDto: F, _execute = false) {
     const filtable = this.filtable();
-    for (const key in this) {
+
+    for (const key in filterDto) {
       if (key in filtable) {
         const methodName = filtable[key] + 'Operation';
-        query = this[methodName](query, key, this[key]);
+        query = this[methodName](query, key, filterDto[key]);
       } else {
         const methodName = key + 'Filter';
         // skip loop if the property is from prototype of not a function.
@@ -20,6 +21,7 @@ export abstract class BaseFilter implements BaseFilterInterface {
         query = this[methodName](query);
       }
     }
+
     return _execute ? query.execute() : query;
   }
 
@@ -56,6 +58,7 @@ export abstract class BaseFilter implements BaseFilterInterface {
 
   likeOperation(query, key, value) {
     value = `%${value}%`;
+
     return query.where(`${this.getTableName()}${key} like :value`, {
       value,
     });

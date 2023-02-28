@@ -9,6 +9,7 @@ import { FilterAdminDto } from './dto/filter-admin.dto';
 
 @Injectable()
 export class AdminService extends BaseService<
+  Admin,
   CreateAdminDto,
   UpdateAdminDto,
   FilterAdminDto
@@ -25,15 +26,17 @@ export class AdminService extends BaseService<
     return await this.adminRepository.save(admin);
   }
 
-  async update(id: number, updateAdminDto: UpdateAdminDto) {
-    const admin = await this.adminRepository.findOneByOrFail({ id });
+  async update(id: number, updateAdminDto: UpdateAdminDto): Promise<Admin> {
+    const admin: Admin = await this.adminRepository.findOneByOrFail({ id });
 
     if (updateAdminDto.password)
       updateAdminDto.password = await this.passwordHash(
         updateAdminDto.password,
       );
+    Object.assign(admin, updateAdminDto);
 
-    return await this.adminRepository.save({ ...admin, ...updateAdminDto });
+    await this.adminRepository.save({ ...admin });
+    return admin;
   }
 
   async findOneByEmail(email: string): Promise<Admin | undefined> {

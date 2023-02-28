@@ -5,9 +5,8 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-import { BaseFilter } from 'src/base/base.filter';
 
-export class FilterAdminDto extends BaseFilter {
+export class FilterAdminDto {
   @ApiProperty({
     example: 'John Ar',
     description: 'The fullname of the user',
@@ -52,16 +51,4 @@ export class FilterAdminDto extends BaseFilter {
   @IsNumberString()
   @IsOptional()
   pageSize?: number;
-
-  filtable() {
-    return {
-      fullname: 'like',
-      email: 'like',
-      active: 'boolean',
-    };
-  }
-
-  getTableName() {
-    return 'admin.';
-  }
 }

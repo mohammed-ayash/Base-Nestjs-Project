@@ -1,15 +1,15 @@
-export interface BaseServiceInterFace<C, U, BaseFilterInterface> {
-  create(createDto: C);
+export interface BaseServiceInterFace<T, C, U, Q> {
+  create(createDto: C): Promise<T>;
 
-  findAll(baseFilterDto: BaseFilterInterface);
+  findAll(baseFilterDto: Q): Promise<T[]>;
 
-  findOne(id: number);
+  findOne(id: number): Promise<T>;
 
-  update(id: number, updateDto: U);
+  update(id: number, updateDto: U): Promise<T>;
 
-  remove(id: number);
+  remove(id: number): Promise<T>;
 
-  paginate(query, baseFilterDto: BaseFilterInterface);
+  paginate(query, baseFilterDto: Q);
 
   getNewEntity();
 }
