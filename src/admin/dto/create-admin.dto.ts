@@ -11,7 +11,7 @@ export class CreateAdminDto {
   @ApiProperty({ example: 'John Ar', description: 'The fullname of the user' })
   @IsNotEmpty()
   @IsString()
-  fullname: string;
+  full_name: string;
 
   @ApiProperty({
     example: 'jo.ar@test.com',
@@ -21,6 +21,14 @@ export class CreateAdminDto {
   @IsNotEmpty()
   @IsString()
   email: string;
+
+  @ApiProperty({
+    example: '009639000000',
+    description: 'The phone number of the user',
+  })
+  @IsNotEmpty()
+  @IsString()
+  phone_number: string;
 
   @ApiProperty({
     example: '123456789',

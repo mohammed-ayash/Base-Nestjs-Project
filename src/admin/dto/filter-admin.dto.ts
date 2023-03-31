@@ -14,7 +14,7 @@ export class FilterAdminDto {
   })
   @IsString()
   @IsOptional()
-  fullname: string;
+  full_name: string;
 
   @ApiProperty({
     example: 'jo.ar@test.com',
@@ -24,6 +24,15 @@ export class FilterAdminDto {
   @IsString()
   @IsOptional()
   email: string;
+
+  @ApiProperty({
+    example: '009639000000',
+    description: 'The phone number of the user',
+    required: false,
+  })
+  @IsString()
+  @IsOptional()
+  phone_number: string;
 
   @ApiProperty({
     example: true,

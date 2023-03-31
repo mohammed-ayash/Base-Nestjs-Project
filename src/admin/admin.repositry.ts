@@ -12,9 +12,10 @@ export class AdminRepositry extends BaseRepositry<Admin, FilterAdminDto> {
 
   filtable() {
     return {
-      fullname: 'like',
+      full_name: 'like',
       email: 'like',
       active: 'boolean',
+      phone_number: 'like',
     };
   }
 

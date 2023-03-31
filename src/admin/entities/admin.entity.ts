@@ -5,12 +5,16 @@ import { BaseModel } from 'src/base/base-model.entity';
 
 @Entity()
 @Unique('unique_email', ['email'])
+@Unique('unique_phone_number', ['phone_number'])
 export class Admin extends BaseModel {
   @Column()
-  fullname: string;
+  full_name: string;
 
   @Column({ unique: true })
   email: string;
+
+  @Column({ unique: true })
+  phone_number: string;
 
   @Exclude()
   @Column()
