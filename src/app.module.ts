@@ -4,6 +4,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AdminModule } from './admin/admin.module';
 import { Admin } from './admin/entities/admin.entity';
 import { AuthModule } from './auth/auth.module';
+import { Role } from './Role/entities/role.entity';
+import { RoleModule } from './Role/role.module';
 
 @Module({
   imports: [
@@ -18,10 +20,11 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
       autoLoadEntities: process.env.DATABASE_AUTO_LOAD === 'true' || false,
-      entities: [Admin],
+      entities: [Admin, Role],
       synchronize: true,
     }),
     AdminModule,
+    RoleModule,
     AuthModule,
   ],
   controllers: [],

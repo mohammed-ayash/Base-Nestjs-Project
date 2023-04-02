@@ -7,9 +7,12 @@ import {
   Post,
   Query,
   Type,
+  UseGuards,
   UsePipes,
 } from '@nestjs/common';
 import { ApiBody, ApiQuery } from '@nestjs/swagger';
+import { PermissionGuard } from 'src/auth/Guard/permission.guard';
+import { Permissions } from 'src/auth/permissions.decorator';
 import { AbstractValidationPipe } from './abstract-validation.pipe';
 import { BaseRequestDto } from './base.dto';
 import { ClassType } from './class.type';
@@ -21,6 +24,7 @@ export function ControllerFactory<C, U, Q>(
   createDto: Type<C>,
   updateDto: Type<U>,
   queryDto: Type<Q>,
+  resourse: string,
 ): ClassType<ICrudController<C, U, Q>> {
   const createPipe = new AbstractValidationPipe(
     { whitelist: true, transform: true },
@@ -42,6 +46,8 @@ export function ControllerFactory<C, U, Q>(
     @UsePipes(queryPipe)
     @ApiQuery({ type: BaseRequestDto(queryDto) })
     @ApiOkResponsed(BaseRequestDto(queryDto))
+    @UseGuards(PermissionGuard)
+    @Permissions('show ' + resourse)
     async getAll(@Query() query: Q): Promise<any> {
       const entities = await this.service.findAll(query);
       return this.successPaginationResponse(entities, query);
@@ -51,6 +57,8 @@ export function ControllerFactory<C, U, Q>(
     @UsePipes(createPipe)
     @ApiOkResponsed(BaseRequestDto(createDto))
     @ApiBody({ type: BaseRequestDto(createDto) })
+    @UseGuards(PermissionGuard)
+    @Permissions('create ' + resourse, 'show ' + resourse)
     async create(@Body() body: C): Promise<any> {
       const entity = await this.service.create(body);
 
@@ -58,6 +66,8 @@ export function ControllerFactory<C, U, Q>(
     }
 
     @Get(':id')
+    @UseGuards(PermissionGuard)
+    @Permissions('show ' + resourse)
     async getOne(@Param('id') id: number): Promise<any> {
       const entity = await this.service.findOne(id);
       return this.successResponse(entity);
@@ -67,6 +77,8 @@ export function ControllerFactory<C, U, Q>(
     @UsePipes(updatePipe)
     @ApiOkResponsed(BaseRequestDto(createDto))
     @ApiBody({ type: BaseRequestDto(createDto) })
+    @UseGuards(PermissionGuard)
+    @Permissions('update ' + resourse, 'show ' + resourse)
     async update(@Body() body: U, @Param('id') id: number): Promise<any> {
       const entity = await this.service.update(id, body);
 
@@ -74,6 +86,8 @@ export function ControllerFactory<C, U, Q>(
     }
 
     @Delete(':id')
+    @UseGuards(PermissionGuard)
+    @Permissions('delete ' + resourse, 'show ' + resourse)
     async delete(@Param('id') id: number): Promise<Partial<any>> {
       const entity = await this.service.remove(id);
       return this.successResponse(entity);

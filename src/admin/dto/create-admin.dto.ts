@@ -3,19 +3,20 @@ import {
   IsBoolean,
   IsEmail,
   IsNotEmpty,
+  IsNumber,
   IsString,
   MinLength,
 } from 'class-validator';
 
 export class CreateAdminDto {
-  @ApiProperty({ example: 'John Ar', description: 'The fullname of the user' })
+  @ApiProperty({ example: 'John Ar', description: 'The fullname of the admin' })
   @IsNotEmpty()
   @IsString()
   full_name: string;
 
   @ApiProperty({
     example: 'jo.ar@test.com',
-    description: 'The email of the user',
+    description: 'The email of the admin',
   })
   @IsEmail()
   @IsNotEmpty()
@@ -24,7 +25,7 @@ export class CreateAdminDto {
 
   @ApiProperty({
     example: '009639000000',
-    description: 'The phone number of the user',
+    description: 'The phone number of the admin',
   })
   @IsNotEmpty()
   @IsString()
@@ -32,7 +33,7 @@ export class CreateAdminDto {
 
   @ApiProperty({
     example: '123456789',
-    description: 'The password of the user',
+    description: 'The password of the admin',
   })
   @IsNotEmpty()
   @MinLength(8)
@@ -44,4 +45,11 @@ export class CreateAdminDto {
   })
   @IsBoolean()
   active: boolean;
+
+  @ApiProperty({
+    example: 1,
+    description: 'The role of the admin',
+  })
+  @IsNumber()
+  role: number;
 }

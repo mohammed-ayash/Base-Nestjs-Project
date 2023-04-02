@@ -17,7 +17,7 @@ export class AdminController extends ControllerFactory<
   CreateAdminDto,
   UpdateAdminDto,
   FilterAdminDto
->(CreateAdminDto, UpdateAdminDto, FilterAdminDto) {
+>(CreateAdminDto, UpdateAdminDto, FilterAdminDto, 'admin') {
   constructor(private readonly adminService: AdminService) {
     super(adminService);
   }

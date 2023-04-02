@@ -39,6 +39,13 @@ export class AdminService extends BaseService<
     return admin;
   }
 
+  async findOne(id: number): Promise<Admin> {
+    return await this.adminRepository.findOneOrFail({
+      where: { id },
+      relations: ['role'],
+    });
+  }
+
   async findOneByEmail(email: string): Promise<Admin | undefined> {
     return this.adminRepository.findOneBy({ email });
   }
