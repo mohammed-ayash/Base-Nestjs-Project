@@ -1,3 +1,4 @@
+import { Field, InputType, Int } from '@nestjs/graphql';
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsBooleanString,
@@ -5,8 +6,12 @@ import {
   IsOptional,
   IsString,
 } from 'class-validator';
-
+@InputType()
 export class FilterAdminDto {
+  @Field(() => String, {
+    description: 'full name of the admin',
+    nullable: true,
+  })
   @ApiProperty({
     example: 'John Ar',
     description: 'The fullname of the user',
@@ -16,6 +21,7 @@ export class FilterAdminDto {
   @IsOptional()
   full_name: string;
 
+  @Field(() => String, { description: 'email of the admin', nullable: true })
   @ApiProperty({
     example: 'jo.ar@test.com',
     description: 'The email of the user',
@@ -25,6 +31,10 @@ export class FilterAdminDto {
   @IsOptional()
   email: string;
 
+  @Field(() => String, {
+    description: 'phone number of the admin',
+    nullable: true,
+  })
   @ApiProperty({
     example: '009639000000',
     description: 'The phone number of the user',
@@ -34,6 +44,7 @@ export class FilterAdminDto {
   @IsOptional()
   phone_number: string;
 
+  @Field(() => Boolean, { description: 'is the admin active ', nullable: true })
   @ApiProperty({
     example: true,
     description: 'is the admin avtive or not',
@@ -43,6 +54,7 @@ export class FilterAdminDto {
   @IsOptional()
   active?: boolean;
 
+  @Field(() => Int, { description: 'The page number', nullable: true })
   @ApiProperty({
     example: 1,
     description: 'The page number',
@@ -52,6 +64,7 @@ export class FilterAdminDto {
   @IsOptional()
   page?: number;
 
+  @Field(() => Int, { description: 'The item count per Page', nullable: true })
   @ApiProperty({
     example: 10,
     description: 'The item count per Page',
